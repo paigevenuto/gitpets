@@ -1,6 +1,11 @@
 const { Octokit } = require("@octokit/rest");
 const { createOAuthAppAuth } = require("@octokit/auth-oauth-app");
-const { CLIENT_ID, CLIENT_SECRET, PERSONAL_ACCESS_TOKEN } = require("./config");
+const {
+  CLIENT_ID,
+  CLIENT_SECRET,
+  PERSONAL_ACCESS_TOKEN,
+  TESTING_MODE,
+} = require("./config");
 const User = require("./models/user");
 const Pet = require("./models/pet");
 const axios = require("axios");

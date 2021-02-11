@@ -5,7 +5,7 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const PERSONAL_ACCESS_TOKEN = process.env.PERSONAL_ACCESS_TOKEN;
 const TOTAL_PETS = 3;
-const TESTING_MODE = process.env.TESTING_MODE || false;
+const TESTING_MODE = process.env.TESTING_MODE;
 
 module.exports = {
   SECRET_KEY,
