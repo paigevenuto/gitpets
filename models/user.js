@@ -5,6 +5,7 @@ class User {
 
   static async update(user) {
     const { login, node_id } = user;
+    console.log(`NodeID: ${node_id}`);
 
     const doesExist = await db.query(
       `SELECT * FROM users
