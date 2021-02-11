@@ -14,8 +14,6 @@ class User {
       [node_id]
     );
 
-    console.log(doesExist);
-
     if (doesExist) {
       const result = await db.query(
         `UPDATE users

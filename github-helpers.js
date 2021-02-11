@@ -279,7 +279,7 @@ async function userFromToken(token) {
     },
   });
   const data = await octokit.users.getAuthenticated();
-  return data;
+  return data.data;
 }
 
 async function oauthCsrf(req) {
