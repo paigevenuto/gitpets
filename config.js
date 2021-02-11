@@ -10,7 +10,7 @@ const TESTING_MODE = process.env.TESTING_MODE || false;
 module.exports = {
   SECRET_KEY,
   PORT,
-  DB_URI,
+  DATABASE_URL,
   CLIENT_ID,
   CLIENT_SECRET,
   PERSONAL_ACCESS_TOKEN,
