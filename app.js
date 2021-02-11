@@ -1,7 +1,7 @@
 const express = require("express");
 const routes = require("./routes");
 const nunjucks = require("nunjucks");
-const { SECRET_KEY, PORT, DB_URI } = require("./config");
+const { SECRET_KEY, PORT } = require("./config");
 const cookieParser = require("cookie-parser");
 const bodyparser = require("body-parser");
 

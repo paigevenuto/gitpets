@@ -1,6 +1,6 @@
 const SECRET_KEY = process.env.SECRET_KEY;
 const PORT = process.env.PORT;
-const DB_URI = process.env.NODE_ENV;
+const DATABASE_URL = process.env.NODE_ENV;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const PERSONAL_ACCESS_TOKEN = process.env.PERSONAL_ACCESS_TOKEN;

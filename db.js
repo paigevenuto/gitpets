@@ -1,4 +1,4 @@
 const pg = require("pg");
-const db = new pg.Client("postgresql:///gitpets");
+const db = new pg.Client(DATABASE_URL);
 db.connect();
 module.exports = db;
