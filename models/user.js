@@ -4,8 +4,8 @@ class User {
   /** Register user with data. Returns new user data. */
 
   static async update(user) {
-    const { login, node_id } = user;
     console.log(user);
+    const { login, node_id } = user;
 
     const doesExist = await db.query(
       `SELECT * FROM users
