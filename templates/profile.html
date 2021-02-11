@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="pet-profile">
+    <h2>{{ user.username }}'s pet {{ pet.name }}</h2>
+    <img src="../pet/{{user.username}}">
+    <div class="button-row">
+        <div class="action-button">
+            <a href="../heart/{{user.username}}">
+                Give 1❤
+            </a>
+        </div>
+        {% if loggedIn %}
+        <div class="secondary-button">
+            <a href="../choose_pet">
+                Choose new pet
+            </a>
+        </div>
+        {% endif %}
+    </div>
+    {% if loggedIn %}
+    <div>
+        <div id="copy-btn">
+            <input value="{{ "![gitpets.herokuapp.com/pet/" + user.username + "](gitpets.herokuapp.com/pet/" + user.username + ")" }}" type="text" id="copy-link">
+            <div id="clip-icon">Copy</div>
+        </div>
+        <label for="copy-link" id="link-label">Show pet in your readme!</label>
+    </div>
+    {% endif %}
+    <script src="copy_link.js"></script>
+</div>
+{% endblock %}

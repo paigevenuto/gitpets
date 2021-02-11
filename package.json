@@ -1,0 +1,34 @@
+{
+  "name": "gitpets",
+  "version": "1.0.0",
+  "description": "## TODO",
+  "main": "app.js",
+  "dependencies": {
+    "@octokit/auth-oauth-app": "^3.0.8",
+    "@octokit/rest": "^18.1.0",
+    "axios": "^0.21.1",
+    "cookie-parser": "^1.4.5",
+    "csurf": "^1.11.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.9.2",
+    "jsonwebtoken": "^8.5.1",
+    "nunjucks": "^3.2.2",
+    "octokit": "^1.0.0-hello-world",
+    "pg": "^8.5.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paigevenuto/gitpets.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paigevenuto/gitpets/issues"
+  },
+  "homepage": "https://github.com/paigevenuto/gitpets#readme"
+}

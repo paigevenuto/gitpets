@@ -1,0 +1,33 @@
+{% extends 'base.html' %}        
+{% block content %}
+<div class="landing-wrapper">
+
+    <h2 class="theme-title">
+        Care for a virtual pet.
+    </h2>
+    <h2 class="theme-title">
+        Improve your productivity.
+    </h2>
+
+    <div class="responsive-two-col">
+        <div>
+            <img src="landing-image.png" class="landing-image">
+        </div>
+
+        <div>
+                <div class="action-button">
+                    <a href={{url}}>
+                        Get Started
+                    </a>
+                </div>
+
+            <div class="landing-text">
+                <p>Choose a pet from different species.</p>
+                <p>Feed and care for it with GitHub contributions.</p>
+                <p>Show off your pet on your GitHub profile.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
