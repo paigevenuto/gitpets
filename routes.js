@@ -45,9 +45,7 @@ router.get("/oauth_callback", async function (req, res, next) {
       const jwtToken = jwt.sign({ userId: user.node_id }, SECRET_KEY, {
         expiresIn: "14d",
       });
-      console.log(jwtToken);
       res.cookie("login", jwtToken);
-      console.log("brrr");
       const createOrUpdate = await User.update(user);
       console.log(createOrUpdate);
       return res.redirect("/choose_pet");

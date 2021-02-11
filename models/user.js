@@ -13,22 +13,26 @@ class User {
       [node_id]
     );
 
-    const result = doesExist.rows
-      ? await db.query(
-          `UPDATE users
+    if (doesExist.rows) {
+      const result = await db.query(
+        `UPDATE users
         SET username = $2
         WHERE user_id = $1
         RETURNING user_id, username
         `,
-          [github_id, username]
-        )
-      : await db.query(
-          `INSERT INTO users 
+        [github_id, username]
+      );
+      return result;
+    } else {
+      const result = await db.query(
+        `INSERT INTO users 
           (github_id, username) 
         VALUES ($1, $2) 
         RETURNING user_id, username`,
-          [github_id, username]
-        );
+        [github_id, username]
+      );
+      return result;
+    }
 
     return result.rows[0];
   }
