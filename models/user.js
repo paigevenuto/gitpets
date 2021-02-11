@@ -20,16 +20,16 @@ class User {
         WHERE user_id = $1
         RETURNING user_id, username
         `,
-        [github_id, username]
+        [login, username]
       );
       return result;
     } else {
       const result = await db.query(
         `INSERT INTO users 
-          (github_id, username) 
+          (user_id, username) 
         VALUES ($1, $2) 
         RETURNING user_id, username`,
-        [github_id, username]
+        [login, username]
       );
       return result;
     }
@@ -48,7 +48,7 @@ class User {
     return result.rows[0].username;
   }
 
-  /** Returns user info: {github_id, username, pet_id}
+  /** Returns user info: {user_id, username, pet_id}
    *
    * If user cannot be found, should raise a 404.
    *
@@ -79,13 +79,13 @@ class User {
    *
    **/
 
-  static async set_pet(github_id, pet_id) {
+  static async set_pet(user_id, pet_id) {
     const result = await db.query(
       `UPDATE users
         SET pet_id=$1
-        WHERE github_id=$2
-        RETURNING github_id, pet_id`,
-      [github_id, pet_id]
+        WHERE user_id=$2
+        RETURNING user_id, pet_id`,
+      [user_id, pet_id]
     );
 
     return result.rows[0];
