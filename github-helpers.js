@@ -73,11 +73,6 @@ function generateUserStats(userData) {
 
 function generatePetStats(userStats) {
   const pet = Pet.petFromUserId(userStats.user_id);
-  const pet = {
-    lastHeart: new Date().toISOString(),
-    name: "Catboi",
-    species: 2,
-  };
 
   const generateLove = () => {
     const today = new Date();
