@@ -19,7 +19,8 @@ class Pet {
       `SELECT * FROM pets
        LEFT JOIN users on pets.pet_id = users.pet_id
        WHERE user_id = $1
-      `
+      `,
+      [user_id]
     );
     return result.rows[0];
   }
