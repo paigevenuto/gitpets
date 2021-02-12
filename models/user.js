@@ -44,6 +44,8 @@ class User {
       [user_id]
     );
     console.log(result);
+    console.log(result.Result);
+    console.log(result.rows);
     return result.rows[0];
   }
 
