@@ -60,6 +60,7 @@ router.get("/user", requireLogin, async function (req, res, next) {
     const token = req.cookies["login"];
     if (jwt.verify(token, SECRET_KEY)) {
       const payload = jwt.decode(token);
+      console.log(payload);
       const user = await User.userFromID(payload.user_id);
       return res.redirect(`/user/${user.username}`);
     }
