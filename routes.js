@@ -42,6 +42,7 @@ router.get("/oauth_callback", async function (req, res, next) {
     if (oauthCsrf(req)) {
       const token = await codeToToken(req);
       const user = await userFromToken(token);
+      console.log(user);
       const jwtToken = jwt.sign({ userId: user.node_id }, SECRET_KEY, {
         expiresIn: "14d",
       });
