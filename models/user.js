@@ -6,6 +6,9 @@ class User {
   static async update(user) {
     const { login, node_id } = user;
 
+    console.log(user);
+    console.log(node_id);
+
     const doesExist = await db.query(
       `SELECT * FROM users
           WHERE user_id = $1
@@ -13,7 +16,9 @@ class User {
       [node_id]
     );
 
-    if (doesExist) {
+    console.log(doesExist.rows[0]);
+
+    if (doesExist.rows[0]) {
       const result = await db.query(
         `UPDATE users
         SET username = $2
