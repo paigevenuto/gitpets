@@ -57,8 +57,8 @@ class Pet {
     } else {
       const pet_id = await db.query(
         `INSERT INTO pets
-             (name, species)
-             VALUES ($1, $2)
+             (name, species, mood, love, play, food)
+             VALUES ($1, $2, 'happy', 160, 160, 160)
              RETURNING pet_id
             `,
         [name, species]

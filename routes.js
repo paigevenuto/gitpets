@@ -62,7 +62,8 @@ router.get("/user", requireLogin, async function (req, res, next) {
       const payload = jwt.decode(token);
       console.log(payload);
       const user = await User.userFromID(payload.user_id);
-      return res.redirect(`/user/${user.username}`);
+      const username = user.username;
+      return res.redirect(`/user/${username}`);
     }
     return res.redirect("/");
   } catch (err) {
