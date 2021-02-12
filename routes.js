@@ -58,8 +58,9 @@ router.get("/oauth_callback", async function (req, res, next) {
 router.get("/user", requireLogin, async function (req, res, next) {
   try {
     const token = req.cookies["login"];
-    if (jwt.verify(token, SECRET_KEY)) {
+    if (token) {
       const payload = jwt.verify(token, SECRET_KEY);
+      console.log(payload);
       const username = await User.usernameFromID(payload.user_id);
       return res.redirect(`/user/${username}`);
     }
