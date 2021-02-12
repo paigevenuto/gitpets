@@ -15,32 +15,24 @@ class User {
     );
 
     if (doesExist.rows[0]) {
-      try {
-        const result = await db.query(
-          `UPDATE users
+      const result = await db.query(
+        `UPDATE users
             SET username = $2
             WHERE user_id = $1
             RETURNING user_id, username
                 `,
-          [node_id, login]
-        );
-        return result.rows[0];
-      } catch (err) {
-        console.log(err);
-      }
+        [node_id, login]
+      );
+      return result.rows[0];
     } else {
-      try {
-        const result = await db.query(
-          `INSERT INTO users 
+      const result = await db.query(
+        `INSERT INTO users 
               (user_id, username) 
             VALUES ($1, $2) 
                 RETURNING user_id, username`,
-          [node_id, login]
-        );
-        return result.rows[0];
-      } catch (err) {
-        console.log(err);
-      }
+        [node_id, login]
+      );
+      return result.rows[0];
     }
   }
 
