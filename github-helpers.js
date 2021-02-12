@@ -158,13 +158,12 @@ async function getUserData(username) {
   const headers = {
     authorization: `bearer ${PERSONAL_ACCESS_TOKEN}`,
   };
-  let userData = await axios.post(
+  const userData = await axios.post(
     "https://api.github.com/graphql",
     { query: query },
     { headers: headers }
   );
-  userData = userData.data.data.user;
-  const userStats = generateUserStats(userData);
+  const userStats = generateUserStats(userData.data.data.user);
   const petStats = generatePetStats(userStats);
   return { userStats, petStats };
   /*
