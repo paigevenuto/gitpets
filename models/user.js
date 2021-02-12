@@ -37,7 +37,7 @@ class User {
     const result = await db.query(`SELECT * FROM users WHERE user_id = $1`, [
       user_id,
     ]);
-    const user = result.rows[0]; // is empty
+    const user = { ...result.rows[0] };
     console.log(user);
     return user;
   }
