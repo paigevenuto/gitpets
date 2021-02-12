@@ -29,5 +29,8 @@
   "bugs": {
     "url": "https://github.com/paigevenuto/gitpets/issues"
   },
-  "homepage": "https://github.com/paigevenuto/gitpets#readme"
+  "homepage": "https://github.com/paigevenuto/gitpets#readme",
+  "engines": {
+    "node": "12.18.3"
+  }
 }
