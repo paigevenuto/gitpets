@@ -32,9 +32,9 @@ class Pet {
     const user = await User.get(username);
     const result = await db.query(
       `UPDATE pets
-       SET lastHeart = $1
-       WHERE user_id = $2
-       LEFT JOIN users on pets.pet_id = users.pet_id
+       SET pets.lastHeart = $1
+       WHERE users.user_id = $2
+       JOIN users ON pets.pet_id = users.pet_id
        RETURNING lastHeart
        `,
       [today, user.user_id]

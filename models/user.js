@@ -36,6 +36,7 @@ class User {
   }
 
   static async usernameFromID(user_id) {
+    console.log(user_id);
     const result = await db.query(
       `SELECT username
             FROM users
@@ -43,6 +44,7 @@ class User {
             `,
       [user_id]
     );
+    console.log(result.rows[0]);
     return result.rows[0].username;
   }
 
