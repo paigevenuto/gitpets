@@ -43,6 +43,7 @@ class User {
             `,
       [user_id]
     );
+    console.log(result);
     return result.rows[0];
   }
 

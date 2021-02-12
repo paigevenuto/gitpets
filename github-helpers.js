@@ -73,7 +73,6 @@ function generateUserStats(userData) {
     contributionsThisWeek: contributionsThisWeek(),
     languagesThisWeek: languagesThisWeek(),
   };
-  console.log(user);
   return user;
 }
 
