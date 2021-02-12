@@ -9,8 +9,7 @@ class User {
     const doesExist = await db.query(
       `SELECT * 
        FROM users
-       WHERE user_id = $1
-       `,
+       WHERE user_id = $1`,
       [node_id]
     );
 
@@ -19,8 +18,7 @@ class User {
         `UPDATE users
             SET username = $2
             WHERE user_id = $1
-            RETURNING user_id, username
-                `,
+            RETURNING user_id, username`,
         [node_id, login]
       );
       return result.rows[0];
@@ -36,17 +34,11 @@ class User {
   }
 
   static async userFromID(user_id) {
-    const result = await db.query(
-      `SELECT *
-            FROM users
-            WHERE user_id = $1
-            `,
-      [user_id]
-    );
-    console.log(result);
-    console.log(result.Result);
-    console.log(result.rows);
-    return result.rows[0];
+    const result = await db.query(`SELECT * FROM users WHERE user_id = $1`, [
+      user_id,
+    ]);
+    console.log(result); // shows my requested data
+    return result.rows[0]; // is empty
   }
 
   /** Returns user info: {user_id, username, pet_id}

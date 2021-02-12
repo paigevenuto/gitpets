@@ -3,7 +3,7 @@ const User = require("./models/user");
 const Pet = require("./models/pet");
 const router = new express.Router();
 const jwt = require("jsonwebtoken");
-const { SECRET_KEY, TOTAL_PETS, CLIENT_ID } = require("./config");
+const { SECRET_KEY, TOTAL_PETS, CLIENT_ID, HOME_URL } = require("./config");
 const csrf = require("csurf");
 const { body, validationResult } = require("express-validator");
 const {
@@ -31,7 +31,7 @@ router.get("/", csrfProtection, async function (req, res, next) {
     const state = req.csrfToken();
     res.cookie("state", state);
     const url = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&state=${state}`;
-    return res.render("home.html", { url });
+    return res.render("home.html", { url, HOME_URL });
   } catch (err) {
     return next(err);
   }
@@ -83,6 +83,7 @@ router.get("/user/:username", async function (req, res, next) {
       loggedIn,
       user: userStats,
       pet: petStats,
+      HOME_URL,
     });
   } catch (err) {
     console.log(err);
@@ -117,7 +118,7 @@ router.get("/choose_pet", requireLogin, async function (req, res, next) {
     const pets = [...Array(TOTAL_PETS).keys()].map((idx) => {
       return { species: idx + 1 };
     });
-    return res.render("choose_pet.html", { pets: pets });
+    return res.render("choose_pet.html", { pets: pets, HOME_URL });
   } catch (err) {
     return next(err);
   }
