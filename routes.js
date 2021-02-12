@@ -42,7 +42,7 @@ router.get("/oauth_callback", async function (req, res, next) {
     if (oauthCsrf(req)) {
       const token = await codeToToken(req);
       const user = await userFromToken(token);
-      const jwtToken = jwt.sign({ userId: user.data.node_id }, SECRET_KEY, {
+      const jwtToken = jwt.sign({ user_id: user.data.node_id }, SECRET_KEY, {
         expiresIn: "14d",
       });
       res.cookie("login", jwtToken);
