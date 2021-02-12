@@ -7,9 +7,10 @@ class User {
     const { login, node_id } = user;
 
     const doesExist = await db.query(
-      `SELECT * FROM users
-          WHERE user_id = $1
-          `,
+      `SELECT * 
+       FROM users
+       WHERE user_id = $1
+       `,
       [node_id]
     );
 
@@ -20,18 +21,18 @@ class User {
         WHERE user_id = $1
         RETURNING user_id, username
         `,
-        [login, username]
+        [node_id, login]
       );
-      return result;
+      return result.rows[0];
     } else {
       const result = await db.query(
         `INSERT INTO users 
           (user_id, username) 
         VALUES ($1, $2) 
         RETURNING user_id, username`,
-        [login, username]
+        [node_id, login]
       );
-      return result;
+      return result.rows[0];
     }
 
     return result.rows[0];
@@ -62,13 +63,7 @@ class User {
       [username]
     );
 
-    const user = result.rows[0];
-
-    if (!user) {
-      new ExpressError("No such user", 404);
-    }
-
-    return user;
+    return result.rows[0];
   }
 
   /** Selectively updates user from given data
