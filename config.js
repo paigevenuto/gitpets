@@ -1,6 +1,6 @@
 const SECRET_KEY = process.env.SECRET_KEY;
 const PORT = process.env.PORT;
-const DATABASE_URL = "postgres:/gitpets";
+const DATABASE_URL = process.env.DATABASE_URL;
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const PERSONAL_ACCESS_TOKEN = process.env.PERSONAL_ACCESS_TOKEN;
