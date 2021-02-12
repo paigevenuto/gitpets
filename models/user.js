@@ -4,8 +4,7 @@ class User {
   /** Register user with data. Returns new user data. */
 
   static async update(user) {
-    const { login, node_id } = user;
-    console.log(user);
+    const { login, node_id } = user.data;
 
     const doesExist = await db.query(
       `SELECT * 
@@ -27,10 +26,9 @@ class User {
       return result.rows[0];
     } else {
       const result = await db.query(
-        `INSERT INTO users 
-              (user_id, username) 
+        `INSERT INTO users (user_id, username) 
             VALUES ($1, $2) 
-                RETURNING user_id, username`,
+            RETURNING user_id, username`,
         [node_id, login]
       );
       return result.rows[0];
