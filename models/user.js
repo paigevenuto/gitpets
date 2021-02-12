@@ -37,13 +37,13 @@ class User {
 
   static async userFromID(user_id) {
     const result = await db.query(
-      `SELECT username
+      `SELECT *
             FROM users
             WHERE user_id = $1
             `,
       [user_id]
     );
-    return result.rows[0].username;
+    return result.rows[0];
   }
 
   /** Returns user info: {user_id, username, pet_id}
