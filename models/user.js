@@ -35,7 +35,7 @@ class User {
     }
   }
 
-  static async usernameFromID(user_id) {
+  static async userFromID(user_id) {
     const result = await db.query(
       `SELECT username
             FROM users

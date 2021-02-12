@@ -58,11 +58,11 @@ router.get("/oauth_callback", async function (req, res, next) {
 router.get("/user", requireLogin, async function (req, res, next) {
   try {
     const token = req.cookies["login"];
-    if (token) {
-      const payload = jwt.verify(token, SECRET_KEY);
+    if (jwt.verify(token, SECRET_KEY)) {
+      const payload = jwt.decode(token);
       console.log(payload);
-      const username = await User.usernameFromID(payload.user_id);
-      return res.redirect(`/user/${username}`);
+      const user = await User.userFromID(payload.user_id);
+      return res.redirect(`/user/${user.username}`);
     }
     return res.redirect("/");
   } catch (err) {
@@ -104,7 +104,6 @@ router.get("/pet/:username", async function (req, res, next) {
   try {
     const { username } = req.params;
     const { petStats } = await updateUserStats(username);
-    console.log(petStats);
 
     res.type("svg");
     return res.render("pet_stats.svg", { pet: petStats });
