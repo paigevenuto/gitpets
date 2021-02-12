@@ -37,7 +37,11 @@ class User {
     const result = await db.query(`SELECT * FROM users WHERE user_id = $1`, [
       user_id,
     ]);
-    const user = { ...result.rows[0] };
+    const user = {
+      user_id: result.rows[0].user_id,
+      username: result.rows[0].username,
+      pet_id: result.rows[0].pet_id,
+    };
     console.log(user);
     return user;
   }
