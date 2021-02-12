@@ -3,13 +3,15 @@ const User = require("./user");
 
 class Pet {
   static async update(user_id, petStats) {
+    const { food, play, love, mood } = petStats;
     const result = await db.query(
       `UPDATE pets
        SET food=$1, play=$2, love=$3, mood=$4
        LEFT JOIN users on pets.pet_id = users.pet_id
        WHERE user_id = $5
        RETURNING *
-      `[(petStats.food, petStats.play, petStats.love, petStats.mood, user_id)]
+      `,
+      [food, play, love, mood, user_id]
     );
     return result.rows[0];
   }

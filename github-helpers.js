@@ -300,6 +300,7 @@ async function updateUserStats(username) {
    *Returns the relevant stats
    */
 
+  // TODO null query fix
   const { userStats, petStats } = await getUserData(username);
   await Pet.update(userStats.id, petStats);
   return { userStats, petStats };
