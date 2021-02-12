@@ -42,8 +42,6 @@ class User {
         console.log(err);
       }
     }
-
-    return result.rows[0];
   }
 
   static async usernameFromID(user_id) {

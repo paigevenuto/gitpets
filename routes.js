@@ -46,7 +46,11 @@ router.get("/oauth_callback", async function (req, res, next) {
         expiresIn: "14d",
       });
       res.cookie("login", jwtToken);
-      const createOrUpdate = await User.update(user);
+      try {
+        const createOrUpdate = await User.update(user);
+      } catch (err) {
+        console.log(err);
+      }
       return res.redirect("/choose_pet");
     }
     return res.redirect("/");
