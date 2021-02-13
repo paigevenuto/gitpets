@@ -34,11 +34,10 @@ class User {
   }
 
   static async userFromID(user_id) {
-    const result = db.query(`SELECT * FROM users WHERE user_id = $1`, [
-      user_id,
-    ]);
-    const queryData = await result;
-    const user = queryData.rows[0];
+    let user;
+    await db
+      .query(`SELECT * FROM users WHERE user_id = $1`, [user_id])
+      .then((res) => (user = res.rows[0]));
     console.log(user);
     return user;
   }
