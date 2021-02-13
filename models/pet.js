@@ -27,7 +27,7 @@ class Pet {
       `,
         [user_id]
       )
-      .then((res) => (pet = res.rows[0]));
+      .then((res) => (pet = { ...res.rows[0] }));
     return pet;
   }
 
