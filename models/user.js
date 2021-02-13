@@ -34,6 +34,9 @@ class User {
   }
 
   static async userFromID(user_id) {
+    // I know the syntax here is WEIRD and could be much simpler
+    // Unfortunately something with Heroku causes that to misbehave
+    // So it's like this as a workaround
     let user;
     await db.query(`SELECT * FROM users WHERE user_id = $1`, [user_id]).then(
       (res) =>
@@ -43,7 +46,6 @@ class User {
           pet_id: res.rows[0].pet_id,
         })
     );
-    console.log(user);
     return user;
   }
 

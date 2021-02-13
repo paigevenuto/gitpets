@@ -5,7 +5,6 @@ const User = require("./user");
 class Pet {
   static async update(user_id, petStats) {
     const user = await userFromID(user_id);
-    console.log(user);
     const { food, play, love, mood } = petStats;
     const result = await db.query(
       `UPDATE pets
