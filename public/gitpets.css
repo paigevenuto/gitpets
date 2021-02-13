@@ -211,6 +211,7 @@ form {
     margin: 0 -5px;
     text-align: center;
     color: white;
+    cursor: pointer;
 }
 #link-label {
     display: block;
