@@ -78,15 +78,13 @@ function generateUserStats(userData) {
 
 async function generatePetStats(userStats) {
   const pet = await Pet.petFromUserId(userStats.user_id);
-  console.log(pet);
 
   const generateLove = () => {
     const today = new Date();
-    const test = today.toISOString();
-    console.log(test);
-    const test2 = new Date(test);
-    console.log(test2);
-    const mostRecentHeart = new Date(pet.lastHeart);
+    const lastHeart = pet.lastHeart;
+
+    console.log(lastHeart);
+    const mostRecentHeart = new Date(lastHeart);
     console.log(`mostRecentHeart: ${mostRecentHeart.toISOString()}`);
     const daysSinceHeart = (today - mostRecentHeart) / (1000 * 60 * 60 * 24); // miliseconds * seconds * hours * minutes
     return Math.floor(((10 - daysSinceHeart) / 10) * 160);
