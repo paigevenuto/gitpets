@@ -63,6 +63,7 @@ class Pet {
             `,
         [name, species]
       );
+      console.log(pet_id);
       const result = await db.query(
         `UPDATE users
                 SET pet_id = $2
