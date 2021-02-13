@@ -63,14 +63,13 @@ class Pet {
             `,
         [name, species]
       );
-      console.log(pet_id);
       const result = await db.query(
         `UPDATE users
                 SET pet_id = $2
                 WHERE user_id=$1
                 RETURNING pet_id
                 `,
-        [user_id, pet_id.pet_id]
+        [user_id, pet_id.rows[0].pet_id]
       );
       return result.rows[0];
     }
