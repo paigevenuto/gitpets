@@ -301,7 +301,7 @@ async function updateUserStats(username) {
 
   const { userStats, petStats } = await getUserData(username);
   console.log(userStats);
-  await Pet.update(userStats.id, petStats);
+  await Pet.update(userStats.user_id, petStats);
   return { userStats, petStats };
 }
 
