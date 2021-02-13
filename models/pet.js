@@ -27,14 +27,7 @@ class Pet {
       `,
         [user_id]
       )
-      .then(
-        (res) =>
-          (pet = {
-            name: res.rows[0].name,
-            species: res.rows[0].species,
-            lastHeart: res.rows[0].lastHeart,
-          })
-      );
+      .then((res) => (pet = res.rows[0]));
     return pet;
   }
 
@@ -65,7 +58,9 @@ class Pet {
       );
       return result.rows[0];
     } else {
-      const lastHeart = new Date().toISOString();
+      const today = new Date();
+      const lastHeart = today.toISOString();
+      console.log(lastHeart);
       const pet_id = await db.query(
         `INSERT INTO pets
              (name, species, mood, love, play, food, lastHeart)
