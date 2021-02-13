@@ -135,6 +135,7 @@ router.post(
     const errors = validationResult(req);
     if (errors.isEmpty()) {
       const { name, species } = req.body;
+      const token = req.cookies["login"];
       const payload = jwt.verify(token, SECRET_KEY);
       await Pet.choosePet(payload.user_id, species, name);
       return res.redirect("/choose_pet");
