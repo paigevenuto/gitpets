@@ -80,6 +80,7 @@ async function generatePetStats(userStats) {
   const pet = await Pet.petFromUserId(userStats.user_id);
 
   const generateLove = () => {
+    console.log(pet);
     const today = new Date();
     const mostRecentHeart = new Date(pet.lastHeart);
     console.log(`mostRecentHeart: ${mostRecentHeart.toISOString()}`);
