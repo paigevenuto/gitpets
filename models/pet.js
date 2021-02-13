@@ -44,6 +44,7 @@ class Pet {
 
   static async choosePet(user_id, species, name) {
     const doesExist = await this.petFromUserId(user_id);
+    console.log(doesExist);
     if (doesExist) {
       const result = await db.query(
         `UPDATE pets
