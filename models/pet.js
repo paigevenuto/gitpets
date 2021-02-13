@@ -19,13 +19,15 @@ class Pet {
 
   static async petFromUserId(user_id) {
     let pet;
-    db.query(
-      `SELECT * FROM pets
+    await db
+      .query(
+        `SELECT * FROM pets
        LEFT JOIN users on pets.pet_id = users.pet_id
        WHERE user_id = $1
       `,
-      [user_id]
-    ).then((res) => (pet = res.rows[0]));
+        [user_id]
+      )
+      .then((res) => (pet = res.rows[0]));
     return pet;
   }
 
