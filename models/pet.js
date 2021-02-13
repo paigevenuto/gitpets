@@ -27,7 +27,14 @@ class Pet {
       `,
         [user_id]
       )
-      .then((res) => (pet = { ...res.rows[0] }));
+      .then(
+        (res) =>
+          (pet = {
+            name: res.rows[0].name,
+            species: res.rows[0].species,
+            lastHeart: res.rows[0].lastHeart,
+          })
+      );
     return pet;
   }
 
