@@ -76,8 +76,9 @@ function generateUserStats(userData) {
   return user;
 }
 
-function generatePetStats(userStats) {
-  const pet = Pet.petFromUserId(userStats.user_id);
+async function generatePetStats(userStats) {
+  const pet = await Pet.petFromUserId(userStats.user_id);
+  console.log(pet);
 
   const generateLove = () => {
     const today = new Date();
@@ -164,7 +165,7 @@ async function getUserData(username) {
     { headers: headers }
   );
   const userStats = generateUserStats(userData.data.data.user);
-  const petStats = generatePetStats(userStats);
+  const petStats = await generatePetStats(userStats);
   return { userStats, petStats };
   /*
    * resolves with

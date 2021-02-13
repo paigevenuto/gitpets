@@ -55,13 +55,14 @@ class Pet {
       );
       return result.rows[0];
     } else {
+      const today = new Date().toISOString();
       const pet_id = await db.query(
         `INSERT INTO pets
-             (name, species, mood, love, play, food)
-             VALUES ($1, $2, 'happy', 160, 160, 160)
+             (name, species, mood, love, play, food, lastHeart)
+             VALUES ($1, $2, 'happy', 160, 160, 160, $3)
              RETURNING pet_id
             `,
-        [name, species]
+        [name, species, lastHeart]
       );
       const result = await db.query(
         `UPDATE users
