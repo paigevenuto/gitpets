@@ -35,9 +35,14 @@ class User {
 
   static async userFromID(user_id) {
     let user;
-    await db
-      .query(`SELECT * FROM users WHERE user_id = $1`, [user_id])
-      .then((res) => (user = res.rows[0]));
+    await db.query(`SELECT * FROM users WHERE user_id = $1`, [user_id]).then(
+      (res) =>
+        (user = {
+          user_id: res.rows[0].user_id,
+          username: res.rows[0].username,
+          pet_id: res.rows[0].pet_id,
+        })
+    );
     console.log(user);
     return user;
   }
