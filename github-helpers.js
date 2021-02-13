@@ -67,6 +67,7 @@ function generateUserStats(userData) {
     );
     return languages.size;
   };
+  // userData.login seems to log an error to the terminal, but the data is there and the app runs anyway
   const user = {
     username: userData.login,
     user_id: userData.id,
