@@ -90,7 +90,6 @@ async function generatePetStats(userStats) {
   const food = Math.floor((160 * userStats.contributionsThisWeek) / 7);
   const play = Math.floor((160 * userStats.languagesThisWeek) / 7);
   const love = generateLove();
-  console.log(`love: ${love}`);
 
   const easy = 40; // 25% of 160
   const hard = 105; // 66% of 160
