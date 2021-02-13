@@ -44,7 +44,6 @@ class Pet {
 
   static async choosePet(user_id, species, name) {
     const doesExist = await this.petFromUserId(user_id);
-    console.log(doesExist);
     if (doesExist) {
       const result = await db.query(
         `UPDATE pets
@@ -66,11 +65,11 @@ class Pet {
       );
       const result = await db.query(
         `UPDATE users
-                SET pet_id = $1
+                SET pet_id = $2
                 WHERE user_id=$1
                 RETURNING pet_id
                 `,
-        [user_id]
+        [user_id, pet_id.pet_id]
       );
       return result.rows[0];
     }
