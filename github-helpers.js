@@ -79,13 +79,12 @@ function generateUserStats(userData) {
 async function generatePetStats(userStats) {
   const pet = await Pet.petFromUserId(userStats.user_id);
 
-  const generateLove = () => {
-    console.log(pet);
+  function generateLove() {
     const today = new Date();
     const mostRecentHeart = new Date(pet.lastHeart);
     const daysSinceHeart = (today - mostRecentHeart) / (1000 * 60 * 60 * 24); // miliseconds * seconds * hours * minutes
     return Math.floor(((10 - daysSinceHeart) / 10) * 160);
-  };
+  }
 
   const food = Math.floor((160 * userStats.contributionsThisWeek) / 7);
   const play = Math.floor((160 * userStats.languagesThisWeek) / 7);
