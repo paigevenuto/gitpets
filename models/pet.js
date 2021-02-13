@@ -36,9 +36,9 @@ class Pet {
     const user = await User.get(username);
     const result = await db.query(
       `UPDATE pets
-       SET lastHeart = $1
+       SET lastheart = $1
        WHERE pet_id = $2
-       RETURNING lastHeart
+       RETURNING lastheart
        `,
       [today, user.pet_id]
     );
@@ -59,15 +59,14 @@ class Pet {
       return result.rows[0];
     } else {
       const today = new Date();
-      const lastHeart = today.toISOString();
-      console.log(lastHeart);
+      const lastheart = today.toISOString();
       const pet_id = await db.query(
         `INSERT INTO pets
-             (name, species, mood, love, play, food, lastHeart)
+             (name, species, mood, love, play, food, lastheart)
              VALUES ($1, $2, 'happy', 160, 160, 160, $3)
              RETURNING pet_id
             `,
-        [name, species, lastHeart]
+        [name, species, lastheart]
       );
       const result = await db.query(
         `UPDATE users
