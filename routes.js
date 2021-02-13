@@ -133,7 +133,7 @@ router.post(
   ],
   async function (req, res, next) {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
+    if (errors.isEmpty()) {
       const { name, species } = req.body;
       const payload = jwt.verify(token, SECRET_KEY);
       await Pet.choosePet(payload.user_id, species, name);
