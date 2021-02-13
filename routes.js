@@ -138,11 +138,11 @@ router.post(
       const token = req.cookies["login"];
       const payload = jwt.verify(token, SECRET_KEY);
       await Pet.choosePet(payload.user_id, species, name);
-      return res.redirect("/choose_pet");
+      return res.redirect("/user");
     }
     try {
       const { name, species } = req.body;
-      return res.redirect("/user");
+      return res.redirect("/choose_pet");
     } catch (err) {
       return next(err);
     }
