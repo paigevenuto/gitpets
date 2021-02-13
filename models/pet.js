@@ -27,8 +27,8 @@ class Pet {
       `,
         [user_id]
       )
-      .then((res) => (pet = { ...res.rows[0] }));
-    return res;
+      .then((res) => (pet = res.rows[0]));
+    return pet;
   }
 
   static async giveHeart(username) {
