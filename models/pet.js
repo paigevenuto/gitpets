@@ -55,7 +55,7 @@ class Pet {
       );
       return result.rows[0];
     } else {
-      const today = new Date().toISOString();
+      const lastHeart = new Date().toISOString();
       const pet_id = await db.query(
         `INSERT INTO pets
              (name, species, mood, love, play, food, lastHeart)
