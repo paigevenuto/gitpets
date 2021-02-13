@@ -83,6 +83,7 @@ async function generatePetStats(userStats) {
   const generateLove = () => {
     const today = new Date();
     const mostRecentHeart = new Date(pet.lastHeart);
+    console.log(`mostRecentHeart: ${mostRecentHeart}`);
     const daysSinceHeart = (today - mostRecentHeart) / (1000 * 60 * 60 * 24); // miliseconds * seconds * hours * minutes
     return Math.floor(((10 - daysSinceHeart) / 10) * 160);
   };
@@ -90,6 +91,7 @@ async function generatePetStats(userStats) {
   const food = Math.floor((160 * userStats.contributionsThisWeek) / 7);
   const play = Math.floor((160 * userStats.languagesThisWeek) / 7);
   const love = generateLove();
+  console.log(`love: ${love}`);
 
   const easy = 40; // 25% of 160
   const hard = 105; // 66% of 160
@@ -301,8 +303,6 @@ async function updateUserStats(username) {
    */
 
   const { userStats, petStats } = await getUserData(username);
-  console.log(userStats);
-  console.log(petStats);
   await Pet.update(userStats.user_id, petStats);
   return { userStats, petStats };
 }
