@@ -82,6 +82,7 @@ async function generatePetStats(userStats) {
 
   const generateLove = () => {
     const today = new Date();
+    console.log(today);
     const mostRecentHeart = new Date(pet.lastHeart);
     console.log(`mostRecentHeart: ${mostRecentHeart}`);
     const daysSinceHeart = (today - mostRecentHeart) / (1000 * 60 * 60 * 24); // miliseconds * seconds * hours * minutes
