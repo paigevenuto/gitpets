@@ -1,42 +1,21 @@
-# GitPets Project Proposal
+# GitPets
 
-## Goal
+[http://gitpets.herokuapp.com/](http://gitpets.herokuapp.com/)
 
-This project aims to be a habit building productivity app that uses the GitHub
-API to measure commit frequency. Users who sign up can pick a pet to take care
-of, and they take care of the pet by making commits and using different
-languages. A user can display an SVG on their GitHub profile which reflects
-their pet's current state.
+## Summary
 
-## Outline
+Choose a pet from different species.
 
-**Frontend**: Vanilla JavaScript
+Feed and care for it with GitHub contributions.
 
-**Backend**: Node, Express, Node-Postgres
+Show off your pet on your GitHub profile's readme as demonstrated.
 
-**Testing**: Jest and Supertest.
+<a href="https://gitpets.herokuapp.com/user/paigevenuto"><img
+src="https://gitpets.herokuapp.com/pet/paigevenuto"></a>
 
-**APIs**:
-
-- [GitHub API](https://docs.github.com/en/free-pro-team@latest/rest)
-- [OAuth Octokit Client](https://github.com/octokit/auth-oauth-app.js)
-- [Octokit API Client](https://octokit.github.io/rest.js/v18)
-
-**Login**: GitHub OAuth.
-
-## Data needs
-
-Only the last 7 days of data is requested each time.
-
-### Data Accessed
-
-- contributionsCollection: _A contributions collection aggregates contributions
-such as opened issues and commits created by a user._
-  - contributionsCalendar: *This is to measure frequency of contributions.*
-  - commitContributionsByRepository: _This aggregates commits made by a user
-  within one repository._
-    - LanguageConnection: _To measure the variety of languages used in recent contributions._
-
+```html
+<a href="https://gitpets.herokuapp.com/user/paigevenuto"><img src="https://gitpets.herokuapp.com/pet/paigevenuto"></a>
+```
 ## Pet Care
 
 - Frequent contributions will keep your pet from getting hungry.
@@ -46,10 +25,37 @@ such as opened issues and commits created by a user._
 Each pet species has different needs. Some species are harder or easier to take
 care of than others.
 
+## Software Used
+
+- Vanilla JavaScript (Frontend needs were simple)
+- Node
+- Express (Used for middleware and simplicity)
+- Node-Postgres
+- Superagent (Used for testing persistence)
+- [GitHub API](https://docs.github.com/en/free-pro-team@latest/rest) (Used to
+  fetch public data)
+- [OAuth Octokit Client](https://github.com/octokit/auth-oauth-app.js) (Used
+  for user login)
+
+## Testing
+
+User flow and offline functions are tested
+
+Use `jest -i` to run test cases.
+
 ## User Flow
 
-![User Flow](./readme/GitPets_User_Flow.jpg)
+1. Visit [http://gitpets.herokuapp.com/](http://gitpets.herokuapp.com/)
+2. Click 'Get started' to view pet choices
+3. Choose a species and name your pet
+4. Paste the code snippet displayed to share your pet in your user readme
+5. Visitors can click the pet and give it one ❤
 
-## Database Schema
+### Data Accessed
 
-![Database schema](./readme/GitPets_Schema.jpg)
+- contributionsCollection: _A contributions collection aggregates contributions
+such as opened issues and commits created by a user._
+  - contributionsCalendar: *This is to measure frequency of contributions.*
+  - commitContributionsByRepository: _This aggregates commits made by a user
+  within one repository._
+    - LanguageConnection: _To measure the variety of languages used in recent contributions._
