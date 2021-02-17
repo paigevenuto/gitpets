@@ -25,6 +25,11 @@ async function codeToToken(req) {
    *exchanges the OAuth code from the query string for an OAuth access token
    */
 
+  // Returns dummy data if testing
+  if (TESTING_MODE) {
+    return { type: "token", code: "dummydata", state: "dummydata" };
+  }
+
   const { code, state } = req.query;
   // to get OAuth token
   const tokenAuthentication = await auth({
@@ -78,7 +83,14 @@ function generateUserStats(userData) {
 }
 
 async function generatePetStats(userStats) {
-  const pet = await Pet.petFromUserId(userStats.user_id);
+  let pet = await Pet.petFromUserId(userStats.user_id);
+
+  if (pet === undefined)
+    pet = {
+      name: "Swarbles",
+      species: 2,
+      lastheart: "2021-02-13T10:16:20.126Z",
+    };
 
   const today = new Date();
   const mostRecentHeart = new Date(pet.lastheart);
@@ -113,10 +125,92 @@ async function generatePetStats(userStats) {
   return petStats;
 }
 
-async function getUserData(username) {
+async function userQuery(username) {
   /*
    *Accepts a username and returns the results of a graphql query
    */
+
+  if (TESTING_MODE) {
+    return {
+      contributionsCollection: {
+        contributionCalendar: {
+          totalContributions: 4,
+          weeks: [
+            {
+              contributionDays: [
+                {
+                  date: "2021-02-02T00:00:00.000+00:00",
+                  contributionCount: 2,
+                },
+                {
+                  date: "2021-02-06T00:00:00.000+00:00",
+                  contributionCount: 0,
+                },
+              ],
+            },
+            {
+              contributionDays: [
+                {
+                  date: "2021-02-08T00:00:00.000+00:00",
+                  contributionCount: 1,
+                },
+                {
+                  date: "2021-02-09T00:00:00.000+00:00",
+                  contributionCount: 3,
+                },
+              ],
+            },
+          ],
+        },
+        commitContributionsByRepository: [
+          {
+            repository: {
+              name: "yt-data-migrator",
+              languages: {
+                nodes: [
+                  {
+                    name: "HTML",
+                  },
+                  {
+                    name: "Python",
+                  },
+                  {
+                    name: "CSS",
+                  },
+                  {
+                    name: "Bash",
+                  },
+                  {
+                    name: "JavaScript",
+                  },
+                ],
+              },
+            },
+          },
+          {
+            repository: {
+              name: "gitpets",
+              languages: {
+                nodes: [
+                  {
+                    name: "HTML",
+                  },
+                  {
+                    name: "JavaScript",
+                  },
+                  {
+                    name: "CSS",
+                  },
+                ],
+              },
+            },
+          },
+        ],
+      },
+      login: "paigevenuto",
+      id: "MDQ6VXNlcjM3MzI1MDk3",
+    };
+  }
 
   let today = new Date();
   const lastWeek = new Date(
@@ -161,102 +255,30 @@ async function getUserData(username) {
     { query: query },
     { headers: headers }
   );
-  const userStats = generateUserStats(userData.data.data.user);
+  return userData.data.data.user;
+}
+
+async function getUserData(username) {
+  const user = await userQuery(username);
+  const userStats = generateUserStats(user);
   const petStats = await generatePetStats(userStats);
   return { userStats, petStats };
-  /*
-   * resolves with
-   *
-   * data: {
-   *  "data": {
-   *    "user": {
-   *      "contributionsCollection": {
-   *        "contributionCalendar": {
-   *          "totalContributions": 4,
-   *          "weeks": [
-   *            {
-   *              "contributionDays": [
-   *                {
-   *                  "date": "2021-02-02T00:00:00.000+00:00",
-   *                  "contributionCount": 2
-   *                },
-   *                {
-   *                  "date": "2021-02-03T00:00:00.000+00:00",
-   *                  "contributionCount": 0
-   *                },
-   *                {
-   *                  "date": "2021-02-04T00:00:00.000+00:00",
-   *                  "contributionCount": 0
-   *                },
-   *                {
-   *                  "date": "2021-02-05T00:00:00.000+00:00",
-   *                  "contributionCount": 0
-   *                },
-   *                {
-   *                  "date": "2021-02-06T00:00:00.000+00:00",
-   *                  "contributionCount": 0
-   *                }
-   *              ]
-   *            },
-   *            {
-   *              "contributionDays": [
-   *                {
-   *                  "date": "2021-02-07T00:00:00.000+00:00",
-   *                  "contributionCount": 0
-   *                },
-   *                {
-   *                  "date": "2021-02-08T00:00:00.000+00:00",
-   *                  "contributionCount": 2
-   *                },
-   *                {
-   *                  "date": "2021-02-09T00:00:00.000+00:00",
-   *                  "contributionCount": 0
-   *                }
-   *              ]
-   *            }
-   *          ]
-   *        },
-   *        "commitContributionsByRepository": [
-   *          {
-   *            "repository": {
-   *              "name": "paigevenuto",
-   *              "languages": {
-   *                "nodes": []
-   *              }
-   *            }
-   *          },
-   *          {
-   *            "repository": {
-   *              "name": "react-jokes-classes",
-   *              "languages": {
-   *                "nodes": [
-   *                  {
-   *                    "name": "HTML"
-   *                  },
-   *                  {
-   *                    "name": "JavaScript"
-   *                  },
-   *                  {
-   *                    "name": "CSS"
-   *                  }
-   *                ]
-   *              }
-   *            }
-   *          }
-   *        ]
-   *      },
-   *      "login": "paigevenuto",
-   *      "id": "MDQ6VXNlcjM3MzI1MDk3"
-   *    }
-   *  }
-   *}
-   */
 }
 
 async function userFromToken(token) {
   /*
    *accepts an OAuth token and returns the authenticated user
    */
+
+  // Returns dummy data if testing
+  if (TESTING_MODE) {
+    return {
+      data: {
+        login: "paigevenuto",
+        node_id: "MDQ6VXNlcjM3MzI1MDk3",
+      },
+    };
+  }
 
   // To create a new octokit object for a request
   const octokit = new Octokit({
@@ -284,6 +306,8 @@ async function oauthCsrf(req) {
    *Checkes the state/csrf token used for the OAuth flow to match
    */
 
+  if (TESTING_MODE) return true;
+
   const { state } = req.query;
   const csrfState = req.cookies["state"];
   return state === csrfState;
@@ -308,4 +332,7 @@ module.exports = {
   codeToToken,
   getUserData,
   updateUserStats,
+  userQuery,
+  generatePetStats,
+  generateUserStats,
 };

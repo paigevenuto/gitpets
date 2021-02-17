@@ -21,3 +21,5 @@ app.use(cookieParser());
 app.use(routes);
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
+
+module.exports = app;
