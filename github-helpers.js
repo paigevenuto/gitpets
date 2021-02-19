@@ -12,7 +12,7 @@ const axios = require("axios");
 
 // For logging to Heroku
 const logging = (log) => {
-  if (!TESTING_MODE) System.err.println(log);
+  if (TESTING_MODE != "true") System.err.println(log);
 };
 
 const auth = createOAuthAppAuth({
@@ -26,7 +26,7 @@ async function codeToToken(req) {
    */
 
   // Returns dummy data if testing
-  if (TESTING_MODE) {
+  if (TESTING_MODE == "true") {
     return { type: "token", code: "dummydata", state: "dummydata" };
   }
 
@@ -130,7 +130,7 @@ async function userQuery(username) {
    *Accepts a username and returns the results of a graphql query
    */
 
-  if (TESTING_MODE) {
+  if (TESTING_MODE == "true") {
     return {
       contributionsCollection: {
         contributionCalendar: {
@@ -271,7 +271,7 @@ async function userFromToken(token) {
    */
 
   // Returns dummy data if testing
-  if (TESTING_MODE) {
+  if ((TESTING_MODE = "true")) {
     return {
       data: {
         login: "paigevenuto",
@@ -306,7 +306,7 @@ async function oauthCsrf(req) {
    *Checkes the state/csrf token used for the OAuth flow to match
    */
 
-  if (TESTING_MODE) return true;
+  if (TESTING_MODE == "true") return true;
 
   const { state } = req.query;
   const csrfState = req.cookies["state"];
