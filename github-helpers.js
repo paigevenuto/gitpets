@@ -11,9 +11,12 @@ const Pet = require("./models/pet");
 const axios = require("axios");
 
 // For logging to Heroku
-const logging = (log) => {
-  if (TESTING_MODE != "true") System.err.println(log);
-};
+// This is breaking the app, commenting out to not have downtime
+/*
+ *const logging = (log) => {
+ *  if (TESTING_MODE != "true") System.err.println(log);
+ *};
+ */
 
 const auth = createOAuthAppAuth({
   clientId: CLIENT_ID,
