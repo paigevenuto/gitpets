@@ -6,9 +6,10 @@ const PERSONAL_ACCESS_TOKEN = process.env.PERSONAL_ACCESS_TOKEN;
 const TOTAL_PETS = 3;
 const TESTING_MODE = process.env.TESTING_MODE;
 const HOME_URL = process.env.HOME_URL;
-const DATABASE_URL = !TESTING_MODE
-  ? process.env.DATABASE_URL
-  : "postgres:///gitpets_test";
+const DATABASE_URL =
+  TESTING_MODE !== "true"
+    ? process.env.DATABASE_URL
+    : "postgres:///gitpets_test";
 
 module.exports = {
   SECRET_KEY,
