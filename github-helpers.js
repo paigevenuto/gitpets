@@ -271,7 +271,7 @@ async function userFromToken(token) {
    */
 
   // Returns dummy data if testing
-  if ((TESTING_MODE = "true")) {
+  if (TESTING_MODE == "true") {
     return {
       data: {
         login: "paigevenuto",
