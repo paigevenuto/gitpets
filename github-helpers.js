@@ -12,11 +12,9 @@ const axios = require("axios");
 
 // For logging to Heroku
 // This is breaking the app, commenting out to not have downtime
-/*
- *const logging = (log) => {
- *  if (TESTING_MODE != "true") System.err.println(log);
- *};
- */
+const logging = (log) => {
+  if (TESTING_MODE != "true") console.error(log);
+};
 
 const auth = createOAuthAppAuth({
   clientId: CLIENT_ID,
