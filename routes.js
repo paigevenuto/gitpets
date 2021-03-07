@@ -3,7 +3,13 @@ const User = require("./models/user");
 const Pet = require("./models/pet");
 const router = new express.Router();
 const jwt = require("jsonwebtoken");
-const { SECRET_KEY, TOTAL_PETS, CLIENT_ID, HOME_URL } = require("./config");
+const {
+  SECRET_KEY,
+  TOTAL_PETS,
+  CLIENT_ID,
+  HOME_URL,
+  CACHE_MAX_AGE,
+} = require("./config");
 const csrf = require("csurf");
 const { body, validationResult } = require("express-validator");
 const {
@@ -42,9 +48,13 @@ router.get("/oauth_callback", async function (req, res, next) {
     if (oauthCsrf(req)) {
       const token = await codeToToken(req);
       const user = await userFromToken(token);
-      const jwtToken = jwt.sign({ user_id: user.data.node_id }, SECRET_KEY, {
-        expiresIn: "14d",
-      });
+      const jwtToken = jwt.sign(
+        { user_id: user.data.node_id, username: user.data.login },
+        SECRET_KEY,
+        {
+          expiresIn: "14d",
+        }
+      );
       res.cookie("login", jwtToken);
       const createOrUpdate = await User.update(user);
       return res.redirect("/choose_pet");
@@ -77,7 +87,10 @@ router.get("/user/:username", async function (req, res, next) {
     const { userStats, petStats } = await updateUserStats(username);
 
     const token = req.cookies["login"] ? req.cookies["login"] : false;
-    const loggedIn = token ? Boolean(jwt.verify(token, SECRET_KEY)) : false;
+    const loggedIn =
+      username == jwt.verify(token, SECRET_KEY).username
+        ? Boolean(jwt.verify(token, SECRET_KEY))
+        : false;
 
     return res.render("profile.html", {
       loggedIn,
@@ -107,6 +120,7 @@ router.get("/pet/:username", async function (req, res, next) {
     const { petStats } = await updateUserStats(username);
 
     res.type("svg");
+    res.set("Cache-control", `public, max-age=${CACHE_MAX_AGE}`);
     return res.render("pet_stats.svg", { pet: petStats });
   } catch (err) {
     return next(err);

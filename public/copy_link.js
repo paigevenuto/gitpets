@@ -1,6 +1,6 @@
 const linkBtn = document.getElementById("copy-link");
 const username = linkBtn.value;
-const shareUrl = `<a href="https://gitpets.herokuapp.com/user/${username}"><img src="https://gitpets.herokuapp.com/pet/${username}"></a>`;
+const shareUrl = `<a href="https://gitpets.herokuapp.com/user/${username}" target="_blank"><img src="https://gitpets.herokuapp.com/pet/${username}"></a>`;
 linkBtn.value = shareUrl;
 
 const clipIcon = document.getElementById("clip-icon");

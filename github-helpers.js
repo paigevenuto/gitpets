@@ -11,7 +11,6 @@ const Pet = require("./models/pet");
 const axios = require("axios");
 
 // For logging to Heroku
-// This is breaking the app, commenting out to not have downtime
 const logging = (log) => {
   if (TESTING_MODE != "true") console.error(log);
 };

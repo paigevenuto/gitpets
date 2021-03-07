@@ -15,4 +15,5 @@ const dbConfig =
 
 const db = new pg.Client(dbConfig);
 db.connect();
+console.log(`database connection: ${DATABASE_URL}`);
 module.exports = db;
