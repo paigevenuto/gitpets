@@ -12,7 +12,8 @@ CREATE TABLE pets (
 CREATE TABLE users (
     user_id text PRIMARY KEY,
     username text UNIQUE NOT NULL,
-    pet_id integer REFERENCES pets (pet_id) ON DELETE CASCADE
+    pet_id integer REFERENCES pets (pet_id) ON DELETE CASCADE,
+    last_updated text
 );
 
 CREATE TABLE species (

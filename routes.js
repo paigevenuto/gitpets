@@ -16,7 +16,6 @@ const {
   userFromToken,
   oauthCsrf,
   codeToToken,
-  getUserData,
   updateUserStats,
 } = require("./github-helpers");
 const { resumeDrain } = require("./db");

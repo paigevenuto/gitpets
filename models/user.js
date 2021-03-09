@@ -33,6 +33,17 @@ class User {
     }
   }
 
+  static async sync(username, last_updated) {
+    await db.query(
+      `
+            UPDATE users
+            SET last_updated = $2
+            WHERE username = $1
+            `,
+      [username, last_updated]
+    );
+  }
+
   static async userFromID(user_id) {
     // I know the syntax here is WEIRD and could be much simpler
     // Unfortunately something with Heroku causes rhat to misbehave

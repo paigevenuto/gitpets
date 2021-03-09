@@ -261,13 +261,6 @@ async function userQuery(username) {
   return userData.data.data.user;
 }
 
-async function getUserData(username) {
-  const user = await userQuery(username);
-  const userStats = generateUserStats(user);
-  const petStats = await generatePetStats(userStats);
-  return { userStats, petStats };
-}
-
 async function userFromToken(token) {
   /*
    *accepts an OAuth token and returns the authenticated user
@@ -318,14 +311,31 @@ async function oauthCsrf(req) {
 
 async function updateUserStats(username) {
   /*
+   *Returns stored data if the user has been updated within the UPDATE_PERIOD
+   *
    *Retrieves up-to-date user data from github
    *Generates the relevant stats
    *Updates the database
    *Returns the relevant stats
    */
 
-  const { userStats, petStats } = await getUserData(username);
+  const today = new Date();
+  const user = await User.get(username);
+  if (user.lastUpdate) {
+    const lastUpdate = new Date(user.lastUpdate);
+    const minutesSinceUpdate = (today - lastUpdate) / (1000 * 60); // miliseconds * seconds
+    if (minutesSinceUpdate < 5) {
+      const petStats = await Pet.petFromUserId(user.user_id);
+      return { userStats: user, petStats };
+    }
+  }
+
+  const freshUserData = await userQuery(username);
+  const userStats = generateUserStats(freshUserData);
+  const petStats = await generatePetStats(userStats);
   await Pet.update(userStats.user_id, petStats);
+  User.sync(username, today.toISOString());
+
   return { userStats, petStats };
 }
 
@@ -333,7 +343,6 @@ module.exports = {
   userFromToken,
   oauthCsrf,
   codeToToken,
-  getUserData,
   updateUserStats,
   userQuery,
   generatePetStats,
