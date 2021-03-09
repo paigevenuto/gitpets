@@ -20,6 +20,7 @@ const {
   updateUserStats,
 } = require("./github-helpers");
 const { resumeDrain } = require("./db");
+const Species = require("./models/species");
 
 const csrfProtection = csrf({ cookie: true });
 
@@ -121,7 +122,9 @@ router.get("/pet/:username", async function (req, res, next) {
 
     res.type("svg");
     res.set("Cache-control", `public, max-age=${CACHE_MAX_AGE}`);
-    return res.render("pet_stats.svg", { pet: petStats });
+    return res.render("pet_stats.svg", {
+      pet: petStats,
+    });
   } catch (err) {
     return next(err);
   }
@@ -132,7 +135,8 @@ router.get("/choose_pet", requireLogin, async function (req, res, next) {
     const pets = [...Array(TOTAL_PETS).keys()].map((idx) => {
       return { species: idx + 1 };
     });
-    return res.render("choose_pet.html", { pets: pets, HOME_URL });
+    const speciesList = await Species.getAll();
+    return res.render("choose_pet.html", { pets: pets, HOME_URL, speciesList });
   } catch (err) {
     return next(err);
   }

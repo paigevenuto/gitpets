@@ -23,7 +23,11 @@
         <div class="carousel-arrow carousel-right" id="carousel-right"></div>
     </div>
 
-    <p id="species-caption">This pet is very playful and needs lots of variety to be happy.</p>
+    <div id="species-captions">
+        {% for species in speciesList %}
+        <p>{{ species.description|safe }}</p>
+        {% endfor %}
+    </div>
     
     <form id="pet-form" class="centered" method="post">
     <input type="text" name="name" id="pet-name" placeholder="Name your pet">

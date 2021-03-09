@@ -8,6 +8,7 @@ const {
 } = require("./config");
 const User = require("./models/user");
 const Pet = require("./models/pet");
+const Species = require("./models/species");
 const axios = require("axios");
 
 // For logging to Heroku
@@ -84,6 +85,7 @@ function generateUserStats(userData) {
 
 async function generatePetStats(userStats) {
   let pet = await Pet.petFromUserId(userStats.user_id);
+  let species = await Species.getSpecies(pet.species);
 
   if (pet === undefined)
     pet = {
@@ -95,23 +97,24 @@ async function generatePetStats(userStats) {
   const today = new Date();
   const mostRecentHeart = new Date(pet.lastheart);
   const daysSinceHeart = (today - mostRecentHeart) / (1000 * 60 * 60 * 24); // miliseconds * seconds * hours * minutes
-  const love = Math.floor(((10 - daysSinceHeart) / 10) * 160);
+  let love = Math.floor(((10 - daysSinceHeart) / 10) * 160);
+  let food = Math.floor((160 * userStats.contributionsThisWeek) / 7);
+  let play = Math.floor((160 * userStats.languagesThisWeek) / 7);
 
-  const food = Math.floor((160 * userStats.contributionsThisWeek) / 7);
-  const play = Math.floor((160 * userStats.languagesThisWeek) / 7);
+  const trimPetStat = (number) => {
+    if (number < 0) return 0;
+    else if (number > 160) return 160;
+    else return number;
+  };
 
-  const easy = 40; // 25% of 160
-  const hard = 105; // 66% of 160
+  love = trimPetStat(love);
+  food = trimPetStat(food);
+  play = trimPetStat(play);
 
   const generateMood = () => {
-    // This is absolutely terrible, and if I wasn't in a rush I'd simply assign each pet their own thresholds to reduce it to three conditionals that work for any pet
-    // This will probably be one of the first things to change when I start adding more pets for fun later on
-    if (food < hard && pet.species == 3) return "hungry";
-    if (food < easy) return "hungry";
-    if (play < hard && pet.species == 2) return "sleepy";
-    if (play < easy) return "sleepy";
-    if (love < hard && pet.species == 1) return "sad";
-    if (love < easy) return "sad";
+    if (food < species.hunger_threshold) return "hungry";
+    if (play < species.sleep_threshold) return "sleepy";
+    if (love < species.sadness_threshold) return "sad";
     return "happy";
   };
   const petStats = {
