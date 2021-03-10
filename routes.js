@@ -131,11 +131,12 @@ router.get("/pet/:username", async function (req, res, next) {
 
 router.get("/choose_pet", requireLogin, async function (req, res, next) {
   try {
-    const pets = [...Array(TOTAL_PETS).keys()].map((idx) => {
-      return { species: idx + 1 };
-    });
     const speciesList = await Species.getAll();
-    return res.render("choose_pet.html", { pets: pets, HOME_URL, speciesList });
+    return res.render("choose_pet.html", {
+      pets: speciesList,
+      HOME_URL,
+      speciesList,
+    });
   } catch (err) {
     return next(err);
   }

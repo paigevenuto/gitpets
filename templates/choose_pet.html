@@ -8,10 +8,10 @@
     <div id="pet-carousel" class="pet-carousel">
         <div class="carousel-arrow carousel-left" id="carousel-left"></div>
         <div id="carousel-images">
-            {% for pet in pets %}
+            {% for species in speciesList %}
             <svg xmlns="http://www.w3.org/2000/svg" id="gitpets-wrapper" x="0" y="0" width="140" height="140" viewBox="0 0 140 140" class="pet-carousel-item">
                 <svg xmlns="http://www.w3.org/2000/svg" x="0" y="0" width="140px" height="140px" viewBox="0 0 450 450">
-                    {% include "pet" + pet.species + ".svg" %}
+                    {% include "pet" + species.id + ".svg" %}
                 </svg>
 
                 <svg xmlns="http://www.w3.org/2000/svg" x="50" y="35" width="40px" height="40px" viewBox="0 0 150 150">
