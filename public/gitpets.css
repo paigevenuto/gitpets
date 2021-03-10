@@ -220,6 +220,12 @@ form {
     margin: 0 auto;
 }
 
+.text-link {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #EF476F;
+}
+
 @media screen and (min-width: 780px) {
     .responsive-two-col {
         display: grid;
