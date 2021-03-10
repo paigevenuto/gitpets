@@ -321,8 +321,8 @@ async function updateUserStats(username) {
 
   const today = new Date();
   const user = await User.get(username);
-  if (user.lastUpdate) {
-    const lastUpdate = new Date(user.lastUpdate);
+  if (user.last_updated) {
+    const lastUpdate = new Date(user.last_updated);
     const minutesSinceUpdate = (today - lastUpdate) / (1000 * 60); // miliseconds * seconds
     if (minutesSinceUpdate < 5) {
       const petStats = await Pet.petFromUserId(user.user_id);
