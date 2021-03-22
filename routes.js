@@ -87,10 +87,15 @@ router.get("/user/:username", async function (req, res, next) {
     const { userStats, petStats } = await updateUserStats(username);
 
     const token = req.cookies["login"] ? req.cookies["login"] : false;
-    const loggedIn =
-      username == jwt.verify(token, SECRET_KEY).username
-        ? Boolean(jwt.verify(token, SECRET_KEY))
-        : false;
+    let loggedIn;
+    if (token) {
+      loggedIn =
+        username == jwt.verify(token, SECRET_KEY).username
+          ? Boolean(jwt.verify(token, SECRET_KEY))
+          : false;
+    } else {
+      loggedIn = false;
+    }
 
     return res.render("profile.html", {
       loggedIn,
